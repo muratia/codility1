@@ -9,17 +9,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This task was given in Codility test 
+ * This task was given in Codility test
+ *
  * @author ahmet
  */
 public class Solution {
 
-
     /**
-     * This method accepts a list of names divided by colon and 
+     * This method accepts a list of names divided by colon and
+     *
      * @param names
      * @param domain
-     * @return 
+     * @return String as required
      */
     public String solution(String names, String domain) {
         String res = "";
@@ -30,39 +31,37 @@ public class Solution {
 
         Multiple multiple = null;
         for (String name : namesArr) {
-            name = name.replaceAll("-", " ");
-            Person person = prepareName(name.trim(), domain);
+            // Now we replace hyphens on the name
+            name = name.replaceAll("-", " ").trim();
+
+            Person person = prepareName(name, domain);
             if (!namesList.contains(person)) {
                 boolean add = namesList.add(person);
             } else {
 
-             
+                // Here we get the account and append a number according to the email accounts with the unique username
                 String account = person.getAccount();
                 final String acc = account;
-                if (multiple == null) {
-                    multiple = new Multiple(account, 1);
-                } else {
-                    multiple = oR.stream()
-                            .filter(m -> acc.equals(m.getName()))
-                            .findAny()
-                            .orElse(null);
-                    if(multiple== null){
-                        multiple = new Multiple(account,0);
-                    }
-                     multiple.setValue(multiple.getValue()+1 );
+// Here we try to find the multiple factor according the to account otherwise it returns null
+                multiple = oR.stream()
+                        .filter(m -> acc.equals(m.getName()))
+                        .findAny()
+                        .orElse(null);
+                if (multiple == null) { // Initialization of the multiple 
+                    multiple = new Multiple(account, 0);
                 }
+                multiple.setValue(multiple.getValue() + 1);
+
                 int value = multiple.getValue();
-                account = account + "" + value;
+                account = account + value;
 
                 person.setAccount(account);
                 person.setEmail("" + person.getAccount() + "@" + domain.toLowerCase() + ".com");
                 namesList.add(person);
-              if(  oR.add(multiple)){
-                  
-              }
+                if (oR.add(multiple)) {
 
-            }
-
+                } 
+            } 
         }
 
         StringBuilder sb = new StringBuilder();
@@ -70,15 +69,18 @@ public class Solution {
             sb.append(person.toString()).append("; ");
         });
         res = sb.toString();
-        res = res.replace(";"+System.getProperty("line.separator"), "");
+        
+        int last =  res.lastIndexOf("; ");
+        res = res.substring(0, last);
         return res;
     }
 
     /**
-     *  This method prepares the name and the given the domain
+     * This method prepares the name and the given the domain
+     *
      * @param name Name of the employee
      * @param domain The domain of the companz
-     * @return  Person (@see Person)
+     * @return Person (@see Person)
      */
     private Person prepareName(String name, String domain) {
         Person res = null;
@@ -112,14 +114,15 @@ public class Solution {
         res = new Person(first, last, prepareAccount(first, last), prepareAccount(first, last) + "@" + domain + ".com");
         return res;
     }
-/**
- *  This method prepeares the account from given first name and last name
- * @param first String
- * @param last String
- * @return String
- */
+
+    /**
+     * This method prepeares the account from given first name and last name
+     *
+     * @param first String
+     * @param last String
+     * @return String
+     */
     private String prepareAccount(String first, String last) {
         return (first + "." + (last.length() > 3 ? last.substring(0, 3) : last)).toLowerCase();
     }
 }
- 

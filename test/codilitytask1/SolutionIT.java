@@ -5,7 +5,6 @@
  */
 package codilitytask1;
 
-import codilitytask1.Solution;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
