@@ -152,9 +152,5 @@ public class PersonTest {
         assertEquals(email, instance.getEmail());
         // TODO review the generated test code and remove the default call to fail.
          
-    }
-
-     
- 
-    
+    } 
 }

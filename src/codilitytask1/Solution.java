@@ -57,7 +57,7 @@ public class Solution {
                 account = account + value;
 
                 person.setAccount(account);
-                person.setEmail("" + person.getAccount() + "@" + domain.toLowerCase() + ".com");
+                person.setEmail("" + person.getAccount() + "@" + domain  + ".com");
                 namesList.add(person);
                 if (oR.add(multiple)) {
 
